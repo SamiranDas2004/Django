@@ -1,23 +1,33 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Django Tweet
-{% endblock title %}
-
-{% block content %}
-<h2>
     {% if form.instance.pk %} 
     Edit Tweet
-    {% else %}
-    Create Tweet
+    {% else %} 
+    Create Tweet 
     {% endif %}
-</h2>
+{% endblock %}
 
-<form action="{% if form.instance.pk %}{% url 'tweet_edit' form.instance.pk %}{% else %}{% url 'tweet_create' %}{% endif %}" method="POST" enctype="multipart/form-data" class="form">
-    {% csrf_token %}
-    {{ form.as_p }} 
-    <button class="btn btn-warning" type="submit">Submit</button>
-</form>
-
-<a href="{% url 'tweet_list' %}">Back to tweet list</a>
+{% block content %}
+<div class="container mt-5">
+    <h2>
+        {% if form.instance.pk %} 
+        Edit Tweet
+        {% else %} 
+        Create Tweet 
+        {% endif %}
+    </h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-success mt-3" type="submit">
+            {% if form.instance.pk %}
+            Update Tweet
+            {% else %}
+            Post Tweet
+            {% endif %}
+        </button>
+    </form>
+    <a href="{% url 'tweet_list' %}" class="btn btn-secondary mt-3">Back to tweet list</a>
+</div>
 {% endblock %}
